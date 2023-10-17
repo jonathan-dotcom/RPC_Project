@@ -35,8 +35,8 @@ try:
         print("Filename:", filename)
 
         # Menerima besar file dari server
-        file_size_str = client_socket.recv(64).decode()
-        file_size = int(file_size_str)
+        file_size = int(client_socket.recv(64))
+        print("File Size:", file_size)
 
         # Menerima hash file dari server
         server_hash = client_socket.recv(64).decode()

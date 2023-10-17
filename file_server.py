@@ -13,8 +13,7 @@ def send_file(client_socket, filename):
     try:
         with open(filename, 'rb') as file:
             file_size = os.path.getsize(filename)  # Get the file size
-            file_size_str = str(file_size)
-            client_socket.send(file_size_str.encode())
+            client_socket.send(file_size)
             while True:
                 data = file.read(8388608)
                 if not data:
