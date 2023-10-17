@@ -31,6 +31,12 @@ try:
     elif operation == "SEND":
         # Meminta nama file yang akan diunduh
         filename = input("Masukkan nama file yang akan diunduh: ")
+
+        #untuk menyesuaikan path sesuai device client
+        current_directory = os.getcwd()
+        destination_file = os.path.join(current_directory, os.path.basename(filename))
+        source_file_normalization = os.path.normpath(filename)
+        file_size = os.path.getsize(source_file_normalization)
         client_socket.send(filename.encode())
 
         # Menerima hash file dari server
@@ -38,7 +44,7 @@ try:
 
         # Menerima data dari server
         data = b''
-        progress_bar = tqdm(total=os.path.getsize(filename), unit="B", unit_scale=True)
+        progress_bar = tqdm(total=os.path.getsize(file_size), unit="B", unit_scale=True)
         while True:
             chunk = client_socket.recv(8388608)
             if not chunk:
