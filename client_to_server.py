@@ -35,7 +35,7 @@ try:
 
         # Menerima hash file dari server
         server_hash = client_socket.recv(64).decode()
-        
+
         #untuk menyesuaikan path sesuai device client
         current_directory = os.getcwd()
         destination_file = os.path.join(current_directory, os.path.basename(filename))
@@ -44,7 +44,7 @@ try:
 
         # Menerima data dari server
         data = b''
-        progress_bar = tqdm(total=os.path.getsize(file_size), unit="B", unit_scale=True)
+        progress_bar = tqdm(total=file_size, unit="B", unit_scale=True)
         while True:
             chunk = client_socket.recv(8388608)
             if not chunk:
