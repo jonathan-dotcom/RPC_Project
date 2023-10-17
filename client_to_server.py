@@ -32,15 +32,15 @@ try:
         # Meminta nama file yang akan diunduh
         filename = input("Masukkan nama file yang akan diunduh: ")
         client_socket.send(filename.encode())
+        print("Filename:", filename)
+
+        # Menerima besar file dari server
+        file_size = int(client_socket.recv(64).decode())
+        print("File Size:", file_size)
 
         # Menerima hash file dari server
         server_hash = client_socket.recv(64).decode()
-
-        #untuk menyesuaikan path sesuai device client
-        current_directory = os.getcwd()
-        destination_file = os.path.join(current_directory, os.path.basename(filename))
-        source_file_normalization = os.path.normpath(destination_file)
-        file_size = os.path.getsize(source_file_normalization)
+        print("Server Hash:", server_hash)
 
         # Menerima data dari server
         data = b''
