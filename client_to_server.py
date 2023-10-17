@@ -35,11 +35,12 @@ try:
         print("Filename:", filename)
 
         # Menerima besar file dari server
-        file_size = int(client_socket.recv(64).decode())  # Receive and decode the file size
+        file_size = client_socket.recv(1024).decode()
+        print('file size:',file_size)
 
         # Menerima hash file dari server
-        server_hash = client_socket.recv(64).decode()
-        print("Server Hash:", server_hash)
+        server_hash_bytes = client_socket.recv(64)
+        server_hash = server_hash_bytes.decode()
 
         # Menerima data dari server
         data = b''
