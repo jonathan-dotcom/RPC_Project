@@ -12,6 +12,8 @@ logger = logging.getLogger(__name__)
 def send_file(client_socket, filename):
     try:
         with open(filename, 'rb') as file:
+            file_size = os.path.getsize(filename)
+            client_socket.send(str(file_size).encode())
             while True:
                 data = file.read(8388608)
                 if not data:
