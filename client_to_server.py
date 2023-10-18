@@ -1,7 +1,7 @@
 import socket
 import os
 import hashlib
-from tqdm import tqdm
+# from tqdm import tqdm
 # Konfigurasi server
 host = '192.168.1.26'  # Ganti dengan alamat IP atau nama host server
 port = 8080         # Ganti dengan port yang sesuai dengan server
@@ -32,26 +32,20 @@ try:
         # Meminta nama file yang akan diunduh
         filename = input("Masukkan nama file yang akan diunduh: ")
         client_socket.send(filename.encode())
-        print("Filename:", filename)
-
-        # Menerima besar file dari server
-        file_size = client_socket.recv(1024).decode()
-        print('file size:',file_size)
 
         # Menerima hash file dari server
-        server_hash_bytes = client_socket.recv(64)
-        server_hash = server_hash_bytes.decode()
+        server_hash = client_socket.recv(64).decode()
 
         # Menerima data dari server
         data = b''
-        progress_bar = tqdm(total=file_size, unit="B", unit_scale=True)
+        # progress_bar = tqdm(total=os.path.getsize(filename), unit="B", unit_scale=True)
         while True:
             chunk = client_socket.recv(8388608)
             if not chunk:
                 break
             data += chunk
-            progress_bar.update(len(chunk))
-        progress_bar.close()
+        #     progress_bar.update(len(chunk))
+        # progress_bar.close()
 
         # Memeriksa hash file yang diterima
         client_hash = hashlib.sha256(data).hexdigest()
